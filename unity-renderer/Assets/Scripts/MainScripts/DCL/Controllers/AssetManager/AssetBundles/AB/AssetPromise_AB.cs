@@ -92,8 +92,10 @@ namespace DCL
 
         protected IEnumerator LoadAssetBundleWithDeps(string baseUrl, string hash, Action OnSuccess, Action<Exception> OnFail)
         {
-            string finalUrl = baseUrl + hash;
 
+            // Semih Disabled http request but still finds the glb files.
+            string finalUrl = baseUrl + hash;
+            finalUrl = "hack";
             if (failedRequestUrls.Contains(finalUrl))
             {
                 OnFail?.Invoke(new Exception($"The url {finalUrl} has failed"));
@@ -104,6 +106,8 @@ namespace DCL
 
             RegisterConcurrentRequest();
 #if (UNITY_EDITOR || UNITY_STANDALONE)
+            // TODO Gravity Layer - hijack this for Gravity Layer requests 
+         
             asyncOp = Environment.i.platform.webRequest.GetAssetBundle(url: finalUrl, hash: Hash128.Compute(hash),
                 disposeOnCompleted: false);
 #else
@@ -220,6 +224,7 @@ namespace DCL
             loadCoroutine = CoroutineStarter.Start(DCLCoroutineRunner.Run(
                 LoadAssetBundleWithDeps(contentUrl, hash, OnSuccess, OnFail),
                 exception => OnFail?.Invoke(exception)));
+
         }
 
         IEnumerator WaitForConcurrentRequestsSlot()

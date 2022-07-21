@@ -27,21 +27,37 @@ namespace DCL
         public AssetPromise_GLTF(string url)
             : this(new ContentProvider_Dummy(), url, null, Environment.i.platform.webRequest)
         {
+            if (String.Equals(this.id.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Debug.Log("1");
+            }
         }
 
         public AssetPromise_GLTF(string url, IWebRequestController webRequestController)
             : this(new ContentProvider_Dummy(), url, null, webRequestController)
         {
+            if (String.Equals(this.id.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Debug.Log("2");
+            }
         }
 
         public AssetPromise_GLTF(ContentProvider provider, string url, string hash = null)
             : this(provider, url, hash, Environment.i.platform.webRequest)
         {
+            if (String.Equals(this.id.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Debug.Log("3");
+            }
         }
 
         public AssetPromise_GLTF(ContentProvider provider, string url, IWebRequestController webRequestController)
             : this(provider, url, null, webRequestController)
         {
+            if (String.Equals(this.id.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Debug.Log("4");
+            }
         }
 
         public AssetPromise_GLTF(ContentProvider provider, string url, string hash, IWebRequestController webRequestController)
@@ -53,6 +69,11 @@ namespace DCL
             // We separate the directory path of the GLB and its file name, to be able to use the directory path when 
             // fetching relative assets like textures in the ParseGLTFWebRequestedFile() event call
             assetDirectoryPath = URIHelper.GetDirectoryName(url);
+            if (String.Equals(this.id.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Debug.Log("0");
+            }
+
         }
 
         protected override void OnBeforeLoadOrReuse()
@@ -114,9 +135,22 @@ namespace DCL
                 };
 
                 gltfComponent.OnFail += OnFail;
-                
-                gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string,
-                    false, tmpSettings, FileToHash);
+
+                // Semih Found the glb Loader
+                string path = provider.baseUrl ?? assetDirectoryPath;
+                string idp = GetId().ToString();
+
+               // Debug.Log("Path: " + path +" filename " + fileName + " idp " + idp);
+                if( String.Equals(idp.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName "+ this.fileName + "\n this.id "+ this.id+ "\n");
+                   // this.fileName = "Semih_M_uBody_BlueTShirt.glb";
+                    //this.id = "QmYybM3yYBAJjDHPA6DB6dgbM3LvsvcQSKHqXWVeQEGisb";
+                    //string idd = GetId() as string;
+                    gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string, false, tmpSettings, FileToHash);
+                }
+                else
+                    gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string, false, tmpSettings, FileToHash);
 
                 asset.name = fileName;
             }

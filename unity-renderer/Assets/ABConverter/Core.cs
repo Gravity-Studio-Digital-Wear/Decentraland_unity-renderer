@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,6 +81,9 @@ namespace DCL.ABConverter
             finalDownloadedPath = PathUtils.FixDirectorySeparator(Config.DOWNLOADED_PATH_ROOT + Config.DASH);
             finalDownloadedAssetDbPath = PathUtils.FixDirectorySeparator(Config.ASSET_BUNDLES_PATH_ROOT + Config.DASH);
 
+            Debug.Log("finalDownloadedPath: " + finalDownloadedPath);
+            Debug.Log("finalDownloadedAssetDbPath: " + finalDownloadedAssetDbPath);
+
             if (Utils.ParseOption(Config.CLI_SET_CUSTOM_OUTPUT_ROOT_PATH, 1, out string[] outputPath))
             {
                 finalDownloadedAssetDbPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), outputPath[0] + "/");
@@ -148,6 +151,7 @@ namespace DCL.ABConverter
 
                         foreach ((string key, GLTFSceneImporter value) in gltfToWait)
                         {
+                            Debug.Log("Key " + key);
                             if (!value.IsCompleted && string.IsNullOrEmpty(currentLoadingGLTF))
                             {
                                 value.LoadScene(CancellationToken.None).Wait(TimeSpan.FromSeconds(1));

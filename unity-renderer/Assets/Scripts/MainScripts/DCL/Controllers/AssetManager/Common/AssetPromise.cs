@@ -38,6 +38,8 @@ namespace DCL
 
         public override bool keepWaiting { get { return state == AssetPromiseState.LOADING || state == AssetPromiseState.WAITING; } }
 
+        private object id;
+
         public void ClearEvents()
         {
             OnSuccessEvent = null;
@@ -87,6 +89,10 @@ namespace DCL
 
             // NOTE(Brian): Get existent library element
             object libraryAssetCheckId = GetLibraryAssetCheckId();
+            id = libraryAssetCheckId;
+            if (String.Equals("QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", libraryAssetCheckId.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                Debug.Log("Asset Promise ID: " + libraryAssetCheckId.ToString());
+
             if (library.Contains(libraryAssetCheckId))
             {
                 asset = GetAsset(libraryAssetCheckId);
@@ -95,6 +101,7 @@ namespace DCL
                 {
                     OnBeforeLoadOrReuse();
                     OnReuse(OnReuseFinished);
+                //    Debug.Log("Library contains asset" + asset.id.ToString());
                 }
                 else
                 {
@@ -108,7 +115,7 @@ namespace DCL
             asset = new AssetType();
             OnBeforeLoadOrReuse();
             asset.id = GetId();
-
+           
             OnLoad(OnLoadSuccess, OnLoadFailure);
         }
 
@@ -129,13 +136,14 @@ namespace DCL
         {
             if (AddToLibrary())
             {
+                //Debug.Log("On Load Sucess " + id.ToString());
                 OnAfterLoadOrReuse();
                 state = AssetPromiseState.FINISHED;
                 CallAndClearEvents(true, null);
             }
             else
             {
-                OnLoadFailure(new Exception("Could not add asset to library"));
+                OnLoadFailure(new Exception("Could not add asset to library on id "+ id.ToString()));
             }
         }
 
@@ -145,12 +153,16 @@ namespace DCL
             if (DataStore.i.common.isApplicationQuitting.Get())
                 return;
 #endif
-            
+           // Debug.Log("On Load Failure " + id.ToString());
             CallAndClearEvents(false, exception);
             Cleanup();
         }
 
-        protected virtual bool AddToLibrary() { return library.Add(asset); }
+        protected virtual bool AddToLibrary() 
+        {
+            //Debug.Log("Add to Library " + asset.ToString());
+            return library.Add(asset); 
+        }
 
         internal virtual void Unload()
         {

@@ -197,6 +197,8 @@ public class PlayerAvatarController : MonoBehaviour, IHideAvatarAreaHandler
                 currentAvatar.CopyFrom(profile.avatar);
 
                 List<string> wearableItems = profile.avatar.wearables.ToList();
+                //wearableItems.Clear();
+                //wearableItems.Add("urn:decentraland:off-chain:base-avatars:black_jacket");
                 wearableItems.Add(profile.avatar.bodyShape);
 
                 //temporarily hardcoding the embedded emotes until the user profile provides the equipped ones

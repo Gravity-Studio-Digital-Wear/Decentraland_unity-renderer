@@ -67,11 +67,16 @@ namespace UnityGLTF.Loader
         private static int awaitCount = 0;
         private async UniTask CreateHTTPRequest(string rootUri, string httpRequestPath, CancellationToken token)
         {
+            // Semih Different downloader for assets 
             string finalUrl = httpRequestPath;
 
             if (!string.IsNullOrEmpty(rootUri))
             {
                 finalUrl = Path.Combine(rootUri, httpRequestPath);
+
+                Debug.Log("finalUrl " + finalUrl);
+                if (String.Equals("https://peer.decentral.io/content/contents/QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", finalUrl, StringComparison.InvariantCultureIgnoreCase))
+                    finalUrl = "https://peer.decentral.io/content/contents/QmYybM3yYBAJjDHPA6DB6dgbM3LvsvcQSKHqXWVeQEGisb";
             }
             
             token.ThrowIfCancellationRequested();

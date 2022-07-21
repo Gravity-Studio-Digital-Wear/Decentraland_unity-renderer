@@ -110,6 +110,9 @@ namespace DCL
             }
 
             // NOTE(Brian): Not in library, add to corresponding lists...
+            if (String.Equals("QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", id.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                Debug.Log("ID: " + id.ToString());
+
             if (!library.Contains(id))
             {
                 waitingPromises.Add(promise);

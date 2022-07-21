@@ -133,6 +133,10 @@ namespace DCL.Components
 
         void LoadAssetBundle(string targetUrl, Action<Rendereable> OnSuccess, Action<Exception> OnFail)
         {
+
+            if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0 )
+                Debug.Log(targetUrl);
+
             if (abPromise != null)
             {
                 UnloadAB();
@@ -153,6 +157,9 @@ namespace DCL.Components
                 OnFailWrapper(OnFail, new Exception($"Content url does not contains {targetUrl}"));
                 return;
             }
+
+            if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0)
+                Debug.Log(bundlesBaseUrl+" "+ hash);
 
             abPromise = new AssetPromise_AB_GameObject(bundlesBaseUrl, hash);
             abPromise.settings = this.settings;
@@ -175,7 +182,10 @@ namespace DCL.Components
                     animationClips = x.animationClips,
                     meshDataSize = x.meshDataSize
                 };
-
+                if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0)
+                {
+                    Debug.Log(r.ToString());
+                }
                 OnSuccessWrapper(r, OnSuccess);
             };
 
@@ -231,6 +241,7 @@ namespace DCL.Components
 
         private void OnFailWrapper(Action<Exception> OnFail, Exception exception)
         {
+          
 #if UNITY_EDITOR
             loadFinishTime = Time.realtimeSinceStartup;
 #endif

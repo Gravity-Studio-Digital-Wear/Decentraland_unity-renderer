@@ -128,6 +128,8 @@ public class WearableItem
 
     protected virtual ContentProvider CreateContentProvider(string baseUrl, MappingPair[] contents)
     {
+        Debug.Log("CreateContentProvider " + baseUrl);
+
         return new ContentProvider
         {
             baseUrl = baseUrl,

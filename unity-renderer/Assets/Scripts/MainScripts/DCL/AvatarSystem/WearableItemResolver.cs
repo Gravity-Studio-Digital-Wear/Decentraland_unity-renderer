@@ -62,6 +62,10 @@ namespace AvatarSystem
 
         public async UniTask<WearableItem> Resolve(string wearableId, CancellationToken ct = default)
         {
+
+            if(String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
+                UnityEngine.Debug.Log("Resolve: " + wearableId);
+
             if (disposeCts == null)
                 disposeCts = new CancellationTokenSource();
             using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, disposeCts.Token);
@@ -82,6 +86,9 @@ namespace AvatarSystem
                 // or it's null and we just return it
                 if (promise.value != null)
                     wearablesRetrieved.Add(wearableId, promise.value);
+
+                if (String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
+                    UnityEngine.Debug.Log("promise.value: " + promise.value);
 
                 return promise.value;
 

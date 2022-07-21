@@ -67,8 +67,8 @@ namespace AvatarSystem
                 }
 
                 //Try getting a default if category is needed
-                if (AvatarSystemUtils.IsCategoryRequired(wearable.data.category))
-                    await FallbackToDefault(container, ct);
+                //if (AvatarSystemUtils.IsCategoryRequired(wearable.data.category))
+                //    await FallbackToDefault(container, ct);
 
                 if (rendereable != null)
                 {
