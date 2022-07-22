@@ -140,16 +140,17 @@ namespace DCL
                 string path = provider.baseUrl ?? assetDirectoryPath;
                 string idp = GetId().ToString();
 
-               // Debug.Log("Path: " + path +" filename " + fileName + " idp " + idp);
-                if( String.Equals(idp.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName "+ this.fileName + "\n this.id "+ this.id+ "\n");
-                   // this.fileName = "Semih_M_uBody_BlueTShirt.glb";
-                    //this.id = "QmYybM3yYBAJjDHPA6DB6dgbM3LvsvcQSKHqXWVeQEGisb";
-                    //string idd = GetId() as string;
-                    gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string, false, tmpSettings, FileToHash);
-                }
-                else
+                Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName " + this.fileName + "\n this.id " + this.id + "\n");
+                // Debug.Log("Path: " + path +" filename " + fileName + " idp " + idp);
+                //if ( String.Equals(idp.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
+                //{
+                //    Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName "+ this.fileName + "\n this.id "+ this.id+ "\n");
+                //   // this.fileName = "Semih_M_uBody_BlueTShirt.glb";
+                //    //this.id = "QmYybM3yYBAJjDHPA6DB6dgbM3LvsvcQSKHqXWVeQEGisb";
+                //    //string idd = GetId() as string;
+                //    gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string, false, tmpSettings, FileToHash);
+                //}
+                //else
                     gltfComponent.LoadAsset(provider.baseUrl ?? assetDirectoryPath, fileName, GetId() as string, false, tmpSettings, FileToHash);
 
                 asset.name = fileName;

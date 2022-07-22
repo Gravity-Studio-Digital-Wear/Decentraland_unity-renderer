@@ -63,8 +63,8 @@ namespace AvatarSystem
         public async UniTask<WearableItem> Resolve(string wearableId, CancellationToken ct = default)
         {
 
-            if(String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
-                UnityEngine.Debug.Log("Resolve: " + wearableId);
+            //if(String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
+            //    UnityEngine.Debug.Log("Resolve: " + wearableId);
 
             if (disposeCts == null)
                 disposeCts = new CancellationTokenSource();

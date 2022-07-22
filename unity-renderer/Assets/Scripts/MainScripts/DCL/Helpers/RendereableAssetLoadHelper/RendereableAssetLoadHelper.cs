@@ -134,8 +134,8 @@ namespace DCL.Components
         void LoadAssetBundle(string targetUrl, Action<Rendereable> OnSuccess, Action<Exception> OnFail)
         {
 
-            if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0 )
-                Debug.Log(targetUrl);
+            //if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0 )
+            //    Debug.Log(targetUrl);
 
             if (abPromise != null)
             {
@@ -158,8 +158,8 @@ namespace DCL.Components
                 return;
             }
 
-            if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0)
-                Debug.Log(bundlesBaseUrl+" "+ hash);
+            //if (String.Compare(targetUrl, "m_ubody_blackjacket_01.glb", StringComparison.InvariantCultureIgnoreCase) == 0)
+            //    Debug.Log(bundlesBaseUrl+" "+ hash);
 
             abPromise = new AssetPromise_AB_GameObject(bundlesBaseUrl, hash);
             abPromise.settings = this.settings;
