@@ -64,7 +64,7 @@ namespace UnityGLTF.Loader
 
         public void LoadStreamSync(string jsonFilePath) { throw new NotImplementedException(); }
         
-        private bool writetofile = true;
+        private bool writetofile = false;
 
 
         private static int awaitCount = 0;
@@ -79,14 +79,13 @@ namespace UnityGLTF.Loader
 
                 //Debug.Log("finalUrl " + finalUrl);
                 // Male Black Jacket
-                if (String.Equals("https://peer.decentral.io/content/contents/QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", finalUrl, StringComparison.InvariantCultureIgnoreCase))
+                if (finalUrl.Contains("QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg"))
                 {
                      finalUrl = "https://wearables-storage.nyc3.digitaloceanspaces.com/wearables/Polygon_Mumbai/0x2953399124f0cbb46d2cbacd8a89cf0599974963_75437324160650951662245703982020702172073797313123328702383515790577235918948/Decentraland/M_uBody_DemoJacket_july25_weighttransfer.glb";
                     //finalUrl = "https://peer.decentral.io/content/contents/QmXA12se62vPFWU9GusXaYP6iM4XTUECHTUkrzFMRUzx9a";
                 }
                 // Female Red Jacket
-                else if (String.Equals("https://peer.decentral.io/content/contents/QmYcSYPMsT4678MhepUPsqtHGDLQArjEETmKA1i1PCBCWM", finalUrl, StringComparison.InvariantCultureIgnoreCase))
-                {
+                else if (finalUrl.Contains("QmYcSYPMsT4678MhepUPsqtHGDLQArjEETmKA1i1PCBCWM"))                {
                     finalUrl = "https://wearables-storage.nyc3.digitaloceanspaces.com/wearables/Polygon_Mumbai/0x2953399124f0cbb46d2cbacd8a89cf0599974963_75437324160650951662245703982020702172073797313123328702383515790577235918948/Decentraland/demojacket_fixedskinning.glb";
                 }
             }
@@ -148,7 +147,7 @@ namespace UnityGLTF.Loader
                     errorMessage = "Downloaded data is null";
                 }
 
-                if (data != null && writetofile)
+                if (writetofile && data != null )
                 {
                     string path = Path.Combine( Application.streamingAssetsPath,"DecentralandModels") +"/"+ httpRequestPath+".glb";
                     if (!File.Exists(path))
