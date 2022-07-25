@@ -63,6 +63,9 @@ namespace UnityGLTF.Loader
         }
 
         public void LoadStreamSync(string jsonFilePath) { throw new NotImplementedException(); }
+        
+        private bool writetofile = true;
+
 
         private static int awaitCount = 0;
         private async UniTask CreateHTTPRequest(string rootUri, string httpRequestPath, CancellationToken token)
@@ -78,8 +81,8 @@ namespace UnityGLTF.Loader
                 // Male Black Jacket
                 if (String.Equals("https://peer.decentral.io/content/contents/QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", finalUrl, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    // finalUrl = "https://wearables-storage.nyc3.digitaloceanspaces.com/wearables/Polygon_Mumbai/0x2953399124f0cbb46d2cbacd8a89cf0599974963_75437324160650951662245703982020702172073797313123328702383515790577235918948/Decentraland/jacket_Decentraland_armstest_newmat.glb";
-                    finalUrl = "https://peer.decentral.io/content/contents/QmXA12se62vPFWU9GusXaYP6iM4XTUECHTUkrzFMRUzx9a";
+                     finalUrl = "https://wearables-storage.nyc3.digitaloceanspaces.com/wearables/Polygon_Mumbai/0x2953399124f0cbb46d2cbacd8a89cf0599974963_75437324160650951662245703982020702172073797313123328702383515790577235918948/Decentraland/M_uBody_DemoJacket_july25_weighttransfer.glb";
+                    //finalUrl = "https://peer.decentral.io/content/contents/QmXA12se62vPFWU9GusXaYP6iM4XTUECHTUkrzFMRUzx9a";
                 }
                 // Female Red Jacket
                 else if (String.Equals("https://peer.decentral.io/content/contents/QmYcSYPMsT4678MhepUPsqtHGDLQArjEETmKA1i1PCBCWM", finalUrl, StringComparison.InvariantCultureIgnoreCase))
@@ -137,12 +140,26 @@ namespace UnityGLTF.Loader
                 if (data != null)
                 {
                     LoadedStream = new MemoryStream(data, 0, data.Length, true, true);
+
                 }
                 else
                 {
                     error = true;
                     errorMessage = "Downloaded data is null";
                 }
+
+                if (data != null && writetofile)
+                {
+                    string path = Path.Combine( Application.streamingAssetsPath,"DecentralandModels") +"/"+ httpRequestPath+".glb";
+                    if (!File.Exists(path))
+                    {
+                        using (FileStream fs = File.Create(path))
+                        {
+                            await fs.WriteAsync(data, 0, data.Length);
+                        }
+                    }
+                }
+
             }
 
             if (error && Environment.i != null)
