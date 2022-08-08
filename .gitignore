@@ -64,3 +64,5 @@ unity-renderer/Assets/TextMesh Pro/Resources/Fonts & Materials/Inter-Bold SDF.as
 unity-renderer/Assets/Scripts/MainScripts/DCL/KernelConfiguration/KernelConfigTypes.cs
 unity-renderer/Assets/Scripts/MainScripts/DCL/Components/LoadableShapes/NFTShape/Materials/OriginalNFTFrame.mat
 unity-renderer/MemoryCaptures/**
+unity-renderer/Assets/StreamingAssets/DecentralandModels/bafybeia25rf3rl2fpyjkuh4zbcuxdz22chewmzfn7vwcivunbqqgmmjv24.glb.meta
+unity-renderer/Assets/StreamingAssets/DecentralandModels/

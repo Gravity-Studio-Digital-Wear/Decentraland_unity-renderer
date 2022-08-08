@@ -86,6 +86,7 @@ public class WearableItem
         WearableLiterals.Misc.HEAD,
         WearableLiterals.Categories.FACIAL_HAIR
     };
+    
 
     public bool TryGetRepresentation(string bodyshapeId, out Representation representation)
     {
@@ -128,7 +129,7 @@ public class WearableItem
 
     protected virtual ContentProvider CreateContentProvider(string baseUrl, MappingPair[] contents)
     {
-    //    Debug.Log("CreateContentProvider " + baseUrl);
+       // Debug.Log("WearableItem "+ id );
 
         return new ContentProvider
         {

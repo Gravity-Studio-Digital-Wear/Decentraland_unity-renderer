@@ -138,9 +138,6 @@ namespace UnityGLTF
                 ApplySettings(settings);
             }
 
-            if (String.Equals("M_uBody_BlackJacket_01.glb", incomingURI, StringComparison.InvariantCultureIgnoreCase))
-                Debug.Log("Base URL" + this.baseUrl + " " + GLTFUri + "  " + this.idPrefix);
-
             this.fileToHashConverter = fileToHashConverter;
             this.settings = settings;
             CancellationToken cancellationToken = ctokenSource.Token;
@@ -245,8 +242,6 @@ namespace UnityGLTF
                     loader = new WebRequestLoader(baseUrl, webRequestController, fileToHashConverter);
                     string id = string.IsNullOrEmpty(idPrefix) ? GLTFUri : idPrefix;
 
-                    if (String.Equals("M_uBody_BlackJacket_01.glb", GLTFUri, StringComparison.InvariantCultureIgnoreCase))
-                        Debug.Log("GLTFUri id "+ GLTFUri + " " + id);
                     iid = id;
 
                     SetupSceneImporter(settings, id, loader);
@@ -296,10 +291,6 @@ namespace UnityGLTF
                         }
                         else
                         {
-
-                            if (String.Equals("QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", iid, StringComparison.InvariantCultureIgnoreCase))
-                                Debug.Log("Asset Downloaded");
-
 
                             loadedAssetRootGameObject = sceneImporter.CreatedObject;
                             animationsEstimatedSize = sceneImporter.animationsEstimatedSize;

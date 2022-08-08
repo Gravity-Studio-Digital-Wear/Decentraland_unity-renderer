@@ -87,8 +87,8 @@ namespace AvatarSystem
                 if (promise.value != null)
                     wearablesRetrieved.Add(wearableId, promise.value);
 
-                if (String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
-                    UnityEngine.Debug.Log("promise.value: " + promise.value);
+                //if (String.Equals("urn:decentraland:off-chain:base-avatars:black_jacket", wearableId))
+                //    UnityEngine.Debug.Log("promise.value: " + promise.value);
 
                 return promise.value;
 

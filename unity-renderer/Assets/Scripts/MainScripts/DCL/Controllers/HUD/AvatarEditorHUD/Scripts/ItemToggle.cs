@@ -81,6 +81,8 @@ public class ItemToggle : UIButton, IPointerEnterHandler, IPointerExitHandler
 
         if (gameObject.activeInHierarchy)
             GetThumbnail();
+
+       // Debug.Log("Togle Item Name:" + w.id);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -133,7 +135,11 @@ public class ItemToggle : UIButton, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    private void OnEnable() { GetThumbnail(); }
+    private void OnEnable() 
+    {
+       // Debug.Log("Togle Item Name:" + wearableItem.id); 
+        GetThumbnail(); 
+    }
 
     protected virtual void OnDestroy()
     {

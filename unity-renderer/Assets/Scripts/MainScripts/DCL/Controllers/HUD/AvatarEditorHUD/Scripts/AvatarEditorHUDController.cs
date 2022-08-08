@@ -528,13 +528,15 @@ public class AvatarEditorHUDController : IHUD
     {
         wearablesByCategory.Clear();
         view.RemoveAllWearables();
+        
         using (var iterator = catalog.Get().GetEnumerator())
         {
             while (iterator.MoveNext())
             {
                 if (iterator.Current.Value.IsEmote())
                     continue;
-
+                Debug.Log("ProcessCatalog: " + iterator.Current.Key);
+                GLMockWearableCreator.WriteWearableItemData(iterator.Current.Value);
                 AddWearable(iterator.Current.Key, iterator.Current.Value);
             }
         }
@@ -544,7 +546,7 @@ public class AvatarEditorHUDController : IHUD
 
     private void AddWearable(string id, WearableItem wearable)
     {
-        if (!wearable.data.tags.Contains(WearableLiterals.Tags.BASE_WEARABLE) && userProfile.GetItemAmount(id) == 0)
+        if (!wearable.data.tags.Contains(WearableLiterals.Tags.BASE_WEARABLE) /*&& userProfile.GetItemAmount(id) == 0*/)
             return;
 
         if (!wearablesByCategory.ContainsKey(wearable.data.category))
@@ -849,7 +851,7 @@ public class AvatarEditorHUDController : IHUD
                             thirdPartyWearablesLoaded.Add(wearable.id);
                     }
                 }
-
+                CatalogController.i.AddWearablesToCatalog(wearables);
                 view.BlockCollectionsDropdown(false);
                 LoadUserProfile(userProfile, true);
             })

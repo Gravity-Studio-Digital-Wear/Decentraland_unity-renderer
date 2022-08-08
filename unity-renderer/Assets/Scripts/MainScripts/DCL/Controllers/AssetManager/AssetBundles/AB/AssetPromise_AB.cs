@@ -95,7 +95,7 @@ namespace DCL
 
             // Semih Disabled http request but still finds the glb files.
             string finalUrl = baseUrl + hash;
-            finalUrl = "hack";
+           // finalUrl = "hack";
             if (failedRequestUrls.Contains(finalUrl))
             {
                 OnFail?.Invoke(new Exception($"The url {finalUrl} has failed"));

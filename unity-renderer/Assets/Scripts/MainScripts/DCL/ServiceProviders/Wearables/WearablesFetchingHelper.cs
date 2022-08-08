@@ -115,6 +115,9 @@ namespace DCL.Helpers
         {
             Promise<Collection[]> promiseResult = new Promise<Collection[]>();
 
+            string url = $"{Environment.i.platform.serviceProviders.catalyst.lambdasUrl}/{THIRD_PARTY_COLLECTIONS_FETCH_URL}";
+           // Debug.Log("Base: " + Environment.i.platform.serviceProviders.catalyst.lambdasUrl + " Collection: " + THIRD_PARTY_COLLECTIONS_FETCH_URL);
+
             Environment.i.platform.webRequest.Get(
                 url: $"{Environment.i.platform.serviceProviders.catalyst.lambdasUrl}/{THIRD_PARTY_COLLECTIONS_FETCH_URL}",
                 downloadHandler: new DownloadHandlerBuffer(),
@@ -126,7 +129,12 @@ namespace DCL.Helpers
                 OnSuccess: (webRequest) =>
                 {
                     var collectionsApiData = JsonUtility.FromJson<WearableCollectionsAPIData>(webRequest.webRequest.downloadHandler.text);
-                    promiseResult.Resolve(collectionsApiData.data);
+                    int l = collectionsApiData.data.Length;
+                    Collection[] data = new Collection[l+1];
+                    collectionsApiData.data.CopyTo(data,1);
+                    data[0] = new Collection() { name = "Gravity Layer", urn = "urn:decentraland:matic:collections-thirdparty:gravitylayer" };
+                    promiseResult.Resolve(data);
+                    //promiseResult.Resolve(collectionsApiData.data);
                 });
 
             return promiseResult;

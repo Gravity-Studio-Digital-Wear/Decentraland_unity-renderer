@@ -384,6 +384,9 @@ public class AvatarEditorHUDView : MonoBehaviour, IPointerDownHandler
 
         string collectionName = GetWearableCollectionName(wearableItem);
 
+        if (wearableItem.Equals(GLMockWearableCreator.BlackJacketURN))
+            Debug.Log("AddWearable " + wearableItem.id);
+
         selectorsByCategory[wearableItem.data.category].AddItemToggle(
             wearableItem,
             collectionName,

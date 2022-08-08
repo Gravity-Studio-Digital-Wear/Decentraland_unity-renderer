@@ -1,6 +1,7 @@
 using DCL.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -58,6 +59,11 @@ public class ItemSelector : MonoBehaviour
         Func<WearableItem, bool> hideOtherWearablesToastStrategy,
         Func<WearableItem, bool> replaceOtherWearablesToastStrategy)
     {
+
+ 
+
+
+      //  Debug.Log("Toggle Item: " + item.id + " Collection: " + collectionName);
         CollectionGroup collectionGroup;
         if (item.IsFromThirdPartyCollection)
             collectionGroup = CreateCollectionGroupIfNeeded(item.ThirdPartyCollectionId, collectionName);
@@ -66,8 +72,12 @@ public class ItemSelector : MonoBehaviour
 
         if (item == null)
             return;
+
         if (itemToggles.ContainsKey(item.id))
             return;
+
+        if (item.id.Equals(GLMockWearableCreator.BlackJacketURN))
+            Debug.Log("AddItemToggle "+ item.id);
 
         ItemToggle newToggle;
         if (item.IsCollectible())
@@ -81,6 +91,7 @@ public class ItemSelector : MonoBehaviour
         }
 
         newToggle.Initialize(item, false, amount);
+        newToggle.gameObject.name = item.id.ToString();
         newToggle.SetHideOtherWerablesToastStrategy(hideOtherWearablesToastStrategy);
         newToggle.SetReplaceOtherWearablesToastStrategy(replaceOtherWearablesToastStrategy);
         newToggle.OnClicked += ToggleClicked;
@@ -96,6 +107,10 @@ public class ItemSelector : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemID))
             return;
+
+
+        if (itemID.Equals(GLMockWearableCreator.BlackJacketURN))
+            Debug.Log("Remove Item Toggle "+ itemID);
 
         ItemToggle toggle = GetItemToggleByID(itemID);
         if (toggle == null)
@@ -149,6 +164,8 @@ public class ItemSelector : MonoBehaviour
         ItemToggle toggle = GetItemToggleByID(itemID);
         if (toggle != null)
             toggle.selected = true;
+
+     
     }
 
     public void SetWearableLoadingSpinner(string wearableID, bool isActive)

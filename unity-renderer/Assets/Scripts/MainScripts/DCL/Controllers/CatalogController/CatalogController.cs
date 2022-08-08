@@ -8,6 +8,44 @@ using DCL.Configuration;
 using DCL.Emotes;
 using Newtonsoft.Json;
 using UnityEngine;
+using System.IO;
+
+public static class GLMockWearableCreator
+{
+    public static string BlackJacketURN = "urn:decentraland:matic:collections-thirdparty:gravitylayer:gravitylayer_black_jacket:1";
+    public static WearableItem[] GetGLWearables()
+    {
+        List<WearableItem> items = new List<WearableItem>();
+        //Red Elegant Jacket.txt
+        //Black Jacket.txt
+        //string json = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, "DecentralandModels/WearableItems", "Red Elegant Jacket.txt"));
+        string json1 = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, "DecentralandModels/WearableItems", "Black Jacket.json"));
+        //WearableItem item1 = JsonUtility.FromJson<WearableItem>(json);
+        WearableItem item2 = JsonUtility.FromJson<WearableItem>(json1);
+       // items.Add(item1);
+        items.Add(item2);
+        return items.ToArray();
+    }
+
+    public static void WriteWearableItemData(WearableItem wearableItem)
+    {
+        if (wearableItem != null)
+        {
+            string json = JsonUtility.ToJson(wearableItem);
+            // if (!string.IsNullOrEmpty(json))
+            {
+                Debug.Log("Json Exported " + wearableItem.GetName());
+                string path = Path.Combine(Application.streamingAssetsPath, "DecentralandModels/WearableItems") + "/" + wearableItem.GetName() + ".json";
+                if (!File.Exists(path))
+                {
+                    File.WriteAllText(path, json);
+                }
+            }
+        }
+    }
+
+}
+
 
 public class CatalogController : MonoBehaviour
 {
@@ -96,6 +134,13 @@ public class CatalogController : MonoBehaviour
 
         if (request == null)
             return;
+
+        // Debug.Log("Payload: " + payload);
+        // Gravity Layer add mock data
+        if (payload.Contains("OwnedWearables"))
+        {
+            AddWearablesToCatalog(GLMockWearableCreator.GetGLWearables());
+        }
 
         AddWearablesToCatalog(request.wearables);
 
@@ -265,17 +310,25 @@ public class CatalogController : MonoBehaviour
         if (!awaitingWearablesByContextPromises.ContainsKey($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}"))
         {
             promiseResult = new Promise<WearableItem[]>();
+            // Gravity Layer injection
+            if (collectionId.Equals("urn:decentraland:matic:collections-thirdparty:gravitylayer"))
+            {
+              //  promiseResult.Resolve(GLMockWearableCreator.GetGLWearables());
+            }
+            else
+            {
+               // This part is original code
+                awaitingWearablesByContextPromises.Add($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}", promiseResult);
 
-            awaitingWearablesByContextPromises.Add($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}", promiseResult);
+                if (!pendingWearablesByContextRequestedTimes.ContainsKey($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}"))
+                    pendingWearablesByContextRequestedTimes.Add($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}", Time.realtimeSinceStartup);
 
-            if (!pendingWearablesByContextRequestedTimes.ContainsKey($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}"))
-                pendingWearablesByContextRequestedTimes.Add($"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}", Time.realtimeSinceStartup);
-
-            WebInterface.RequestThirdPartyWearables(
-                userId,
-                collectionId,
-                $"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}"
-            );
+                WebInterface.RequestThirdPartyWearables(
+                    userId,
+                    collectionId,
+                    $"{THIRD_PARTY_WEARABLES_CONTEXT}_{collectionId}"
+                );
+            }
         }
         else
         {

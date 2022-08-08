@@ -16,16 +16,12 @@ namespace DCL
         Coroutine loadingCoroutine;
 
         public AssetPromise_AB_GameObject(string contentUrl, string hash) : base(contentUrl, hash) {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("AssetPromise_AB_GameObject");
         }
 
         protected override void OnLoad(Action OnSuccess, Action<Exception> OnFail) { loadingCoroutine = CoroutineStarter.Start(LoadingCoroutine(OnSuccess, OnFail)); }
 
         protected override bool AddToLibrary()
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("AddToLibrary");
 
             if (!library.Add(asset))
             {
@@ -49,17 +45,13 @@ namespace DCL
 
         protected override void OnReuse(Action OnSuccess)
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("OnReuse");
-              
+
             asset.renderers = MeshesInfoUtils.ExtractUniqueRenderers(asset.container);
             asset.Show(OnSuccess);
         }
 
         protected override void OnAfterLoadOrReuse()
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("OnAfterLoadOrReuse");
             asset.renderers = MeshesInfoUtils.ExtractUniqueRenderers(asset.container);
             settings.ApplyAfterLoad(asset.container.transform);
         }
@@ -94,8 +86,6 @@ namespace DCL
 
         public IEnumerator LoadingCoroutine(Action OnSuccess, Action<Exception> OnFail)
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("LoadingCoroutine");
             PerformanceAnalytics.ABTracker.TrackLoading();
             subPromise = new AssetPromise_AB(contentUrl, hash, asset.container.transform);
             bool success = false;
@@ -125,15 +115,11 @@ namespace DCL
 
             if (success)
             {
-                //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-                //    Debug.Log("success");
                 PerformanceAnalytics.ABTracker.TrackLoaded();
                 OnSuccess?.Invoke();
             }
             else
             {
-                //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-                //    Debug.Log("fail");
                 PerformanceAnalytics.ABTracker.TrackFailed();
                 loadingException ??= new Exception($"AB sub-promise asset or container is null. Asset: {subPromise.asset}, container: {asset.container}");
                 Debug.LogException(loadingException);
@@ -143,10 +129,7 @@ namespace DCL
 
         public IEnumerator InstantiateABGameObjects()
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("InstantiateABGameObjects");
-
-            var goList = subPromise.asset.GetAssetsByExtensions<GameObject>("glb", "ltf");
+            var goList = subPromise.asset.GetAssetsByExtensions<GameObject>("glb", "gltf");
 
             if (goList.Count == 0)
             {
@@ -200,9 +183,6 @@ namespace DCL
 
         private void UploadMeshesToGPU(HashSet<Mesh> meshesList)
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("UploadMeshesToGPU");
-
             foreach ( Mesh mesh in meshesList )
             {
                 if ( !mesh.isReadable )
@@ -215,8 +195,6 @@ namespace DCL
 
         protected override Asset_AB_GameObject GetAsset(object id)
         {
-            //if (String.Compare(hash, "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    Debug.Log("GetAsset");
             if (settings.forceNewInstance)
             {
                 return ((AssetLibrary_AB_GameObject) library).GetCopyFromOriginal(id);

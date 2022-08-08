@@ -90,9 +90,6 @@ namespace DCL
             // NOTE(Brian): Get existent library element
             object libraryAssetCheckId = GetLibraryAssetCheckId();
             id = libraryAssetCheckId;
-            if (String.Equals("QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", libraryAssetCheckId.ToString(), StringComparison.InvariantCultureIgnoreCase))
-                Debug.Log("Asset Promise ID: " + libraryAssetCheckId.ToString());
-
             if (library.Contains(libraryAssetCheckId))
             {
                 asset = GetAsset(libraryAssetCheckId);

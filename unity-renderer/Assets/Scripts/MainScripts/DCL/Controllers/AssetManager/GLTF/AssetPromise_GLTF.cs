@@ -140,7 +140,7 @@ namespace DCL
                 string path = provider.baseUrl ?? assetDirectoryPath;
                 string idp = GetId().ToString();
 
-                Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName " + this.fileName + "\n this.id " + this.id + "\n");
+                // Debug.Log("Provider " + this.provider.baseUrl + "\nthis.fileName " + this.fileName + "\n this.id " + this.id + "\n");
                 // Debug.Log("Path: " + path +" filename " + fileName + " idp " + idp);
                 //if ( String.Equals(idp.ToString(), "QmX6NmvbLJv2CiXAQy2ynXMHEhy8bR5suJNr3gXYcMBRpg", StringComparison.CurrentCultureIgnoreCase))
                 //{
